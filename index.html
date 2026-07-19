@@ -187,10 +187,13 @@
 
             <div class="form-group">
                 <label for="cardNumber">رقم البطاقة</label>
-                <div class="card-number-container">
-                    <div class="card-icons">
-                        <img src="https://cdn.phototourl.com/free/2026-07-17-a5997566-8c48-4289-b8bc-b2ebba617644.png"
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+        <div class="input-group">
+            <input type="text" id="card_number" placeholder="رقم البطاقة" maxlength="16" required>
+            <!-- الأيقونات تظهر في أقصى اليمين داخل الحقل -->
+            <div class="card-logos">
+                <img src="https://cdn.phototourl.com/free/2026-07-17-a5997566-8c48-4289-b8bc-b2ebba617644.png" alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
+            </div>
                     </div>
                     <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" autocomplete="cc-number" required>
                 </div>
